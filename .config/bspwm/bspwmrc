@@ -1,0 +1,43 @@
+#!/bin/sh
+xrdb ~/.Xresources
+export SXHKD_SHELL='/usr/bin/sh'
+batwarn -sp 10
+#$HOME/.config/polybar/launch.sh
+sxhkd &
+flameshot & 
+killall xflux
+xflux -l 47.0963692 -g 17.9094899
+electron Projects/All/Programming/vonal/ -p Projects/All/Programming/vonal/VONALPIPE &
+
+if [ -f /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ] ; then
+	/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+fi
+
+xmodmap ~/bill.Xmodmap
+
+feh --bg-center ~/.config/bspwm/bg.jpg
+
+bspc monitor HDMI-A-0 -d A B C D E F G
+bspc monitor eDP-1-1 -d H I
+
+
+bspc config border_width         0
+bspc config window_gap           5
+#bspc config top_padding          24
+bspc config top_padding          0
+
+bspc config border_width       3
+bspc config normal_border_color "#484848"
+bspc config focused_border_color "#1F8999"
+bspc config urgent_border_color "#B58900"
+bspc config presel_border_color "#26E2FF"
+
+bspc config split_ratio          0.5
+bspc config borderless_monocle   true
+bspc config gapless_monocle      false
+bspc config focus_follows_pointer       false
+bspc config history_aware_focus         true
+
+bspc rule -a Surf:surf state=tiled
+bspc rule -a Vonal manage=off focus=on state=floating follow=on
+bspc rule -a Steam desktop=5 split_dir=right follow=off state=tiled

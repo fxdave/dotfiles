@@ -1,0 +1,82 @@
+!-------------------------------------------------------------------------------
+! Xft settings
+!-------------------------------------------------------------------------------
+
+!Xft.dpi:                    96
+!Xft.antialias:              false
+!Xft.rgba:                   rgb
+!Xft.hinting:                true
+!Xft.hintstyle:              hintslight
+
+URxvt.depth:                32
+URxvt.geometry:             90x30
+URxvt.transparent:          false
+URxvt.fading:               0
+URxvt.loginShell:           true
+URxvt.saveLines:            1000
+URxvt.internalBorder:       3
+URxvt.lineSpace:            0
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+! Fonts
+URxvt.allow_bold:           false
+URxvt*font: xft:Droid Sans Mono for Powerline:regular:size=12
+
+xterm*font: xft:Droid Sans Mono for Powerline:regular:size=12
+! Fix font space
+URxvt*letterSpace: -1
+
+! Scrollbar
+URxvt.scrollStyle:          rxvt
+URxvt.scrollBar:            false
+
+!-*- Perl extensions -*-
+URxvt.perl-ext-common: default,selection-to-clipboard,pasta,matcher,keyboard-select,resize-font
+URxvt.resize-font.smaller: C-Up
+URxvt.resize-font.bigger:  C-Down
+
+URxvt.keysym.C-Down:  resize-font:smaller
+URxvt.keysym.C-Up:    resize-font:bigger
+
+URxvt.keysym.M-u:     perl:url-select:select_next
+URxvt.url-launcher:   /usr/bin/chromium
+URxvt.underlineURLs:  True
+URxvt.matcher.button: 1 
+URxvt.keysym.M-Escape:perl:keyboard-select:activate
+URxvt.keysym.Control-Shift-V:     perl:pasta:paste
+
+! Cursor
+URxvt.cursorBlink:          true
+URxvt.cursorColor:          #657b83
+URxvt.cursorUnderline:      false
+
+! Pointer
+URxvt.pointerBlank:         true
+
+! -----------------------------------------------------------------------------
+! File: gruvbox-dark.xresources
+! Description: Retro groove colorscheme generalized
+! Author: morhetz <morhetz@gmail.com>
+! Source: https://github.com/morhetz/gruvbox-generalized
+! Last Modified: 6 Sep 2014
+! -----------------------------------------------------------------------------
+
+*background: #101316
+*foreground: #fff
+
+*color0: #3f3f3f
+*color1: #705050
+*color2: #60b48a
+*color3: #dfaf8f
+*color4: #506070
+*color5: #dc8cc3
+*color6: #8cd0d3
+*color7: #dcdccc
+*color8: #709080
+*color9: #dca3a3
+*color10: #c3bf9f
+*color11: #f0dfaf
+*color12: #94bff3
+*color13: #ec93d3
+*color14: #93e0e3
+*color15: #ffffff
