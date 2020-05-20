@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ $(ps -p $(xdotool getwindowfocus getwindowpid) -o comm=) = $1 ];
+        then $2 $(xdotool getwindowfocus getwindowname);
+        else $2;
+fi
