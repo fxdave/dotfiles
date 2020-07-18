@@ -1,6 +1,39 @@
-#!/bin/sh
+#!/bin/bash
 
-if [ $(ps -p $(xdotool getwindowfocus getwindowpid) -o comm=) = $1 ];
-        then $2 $(xdotool getwindowfocus getwindowname);
-        else $2;
+WINDOW_NAME=$(xdotool getwindowfocus getwindowname)
+PROCESS_NAME=$(ps -p $(xdotool getwindowfocus getwindowpid) -o comm=)
+
+function start_with_window_name {
+        local window_name="${1}" script="${2}"
+
+        echo "window name ${script/\%F/$window_name} script: ${script}"
+        sh -c "${script/\%F/$window_name}" &
+        disown
+        exit
+}
+
+start_without_window_name() {
+        local script="${1}"
+
+        sh -c "${script/\%F/}" &
+        disown
+        exit
+}
+
+start_alternative() {
+        local script="${1}"
+
+        echo "alter" "${script}"
+        sh -c "${script}" &
+        disown
+        exit
+}
+
+
+if [ "${PROCESS_NAME}" == "${1}" ]; then
+        start_with_window_name "${WINDOW_NAME}" "${2}"
+elif [ -n "${3}" ]; then
+        start_alternative "${3}"
+else
+        start_without_window_name "${2}"
 fi
