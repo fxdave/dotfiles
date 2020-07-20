@@ -1,0 +1,12 @@
+[Unit]
+Description=JACK 2
+Before=sound.target
+Before=pulseaudio.service
+Before=pulseaudio.socket
+After=usb-reset.service
+
+[Service]
+ExecStart=/usr/bin/jackd -dalsa -dhw:CODEC,0 -r48000 -p1024 -n2
+
+[Install]
+WantedBy=sockets.target

@@ -1,41 +1,57 @@
 #!/usr/bin/env sh
 
 # apps
-super + {Return, shift + Return}
+super + {Return, shift + Return, alt + Return}
 	{\
-		if [ $(ps -p $(xdotool getwindowfocus getwindowpid) -o comm=) = "urxvt" ]; then urxvt -e sh -c "cd "$(xdotool getwindowfocus getwindowname)"; fish"; else urxvt; fi,\
+		~/.config/bspwm/context-run-urxvt.sh,\
 		urxvt,\
+		~/.config/bspwm/colored-urxvt.sh,\
 	}
 
 super + p ; {n, o, a, u, d, r}
 	~/Projects/manage.fish {new, open, archive, unarchive, delete, run}
 
-super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, g, f, z, g}
+super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, f, z, g, k}
 	{\
 		dash -c "xcolor | xclip -sel clip",\
 		chromium,\
 		code,\
-		context-run urxvt code,\
+		context-run urxvt "code %F",\
 		subl,\
-		context-run urxvt subl,\
+		context-run urxvt "subl %F",\
 		nautilus,\
-		context-run urxvt nautilus,\
+		context-run urxvt "nautilus %F",\
 		spotify,\
-		mattermost-desktop,\
-		chromium google.com,\
-		chromium facebook.com,\
+		com.mattermost.Desktop,\
+		chromium facebook.com/messages,\
 		chromium youtube.com,\
-		xset m 0 0; steam steam://rungameid/730\
+		xset m 0 0; steam steam://rungameid/730,\
+		~/birth.sh\
 	}
+
+shift + Menu
+	systemctl --user is-active qmenu_hud && systemctl --user stop qmenu_hud || systemctl --user start qmenu_hud
+
+Menu
+	qmenu_hud
 
 super + l; {p, l , r}
 	{killall -9 electron; systemctl poweroff, systemctl suspend, killall -9 electron; systemctl reboot}
 
-super + c; {n, shift + n, s}
-	{urxvt -e nmtui, nm-connection-editor, pavucontrol}
+
+super + c; {n, shift + n, s, g}
+	{\
+		urxvt -e nmtui,\
+		nm-connection-editor,\
+		pavucontrol,\
+		urxvt -e sh -c "pasuspender -- jackd -d alsa & guitarix"\
+	}
 
 super + space
-	echo 'show' > /home/dbiro/Projects/All/Programming/vonal/VONALPIPE
+	echo 'show' > /home/stylers/Projects/vonal/vonal/VONALPIPE
+
+shift + Print
+	killall ffcast || ffcast -s byzanz-record --x=%x --y=%y --width=%w --height=%h ~/Pictures/recorded_region.gif
 
 super + Print
 	if [ $(pgrep xflux) ]; then killall xflux; else xflux -l 47.0963692 -g 17.9094899; fi
@@ -52,25 +68,34 @@ super + Escape
 	pkill -USR1 -x sxhkd
 
 # xf86 backlight
-super + XF86MonBrightnessUp
-	/usr/bin/night inc
-super + XF86MonBrightnessDown
-	/usr/bin/night dec
+# super + XF86MonBrightnessUp
+# 	/usr/bin/night inc
+# super + XF86MonBrightnessDown
+# 	/usr/bin/night dec
 
-# xf86 backlight
+# xf86
+
 XF86MonBrightnessUp
 	intelbacklight -inc 10000
 XF86MonBrightnessDown
 	intelbacklight -dec 10000
 
-# xf86 audio..
+XF86Calculator
+	urxvt -e sage
+
+XF86AudioPlay
+	playerctl play-pause
+XF86AudioNext
+	playerctl next
+XF86AudioPrev
+	playerctl prev
+
 XF86AudioLowerVolume
 	pactl set-sink-volume @DEFAULT_SINK@ -10%
 XF86AudioRaiseVolume
 	pactl set-sink-volume @DEFAULT_SINK@ +10%
-
 XF86AudioMute
-	echo 0 > /sys/class/leds/input21::scrolllock/brightness; pactl set-sink-mute @DEFAULT_SINK@ toggle
+	pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 alt + XF86AudioLowerVolume
 	pactl set-source-volume @DEFAULT_SOURCE@ -10%
@@ -126,7 +151,11 @@ super + {_,shift + }{1-9,0}
 
 # rotate
 super + {_,shift +}v
-	bspc node @/ -R {90,-90}
+	CURRENT=$(xdotool getwindowfocus); bspc node -f @parent; bspc node -R {90, -90}; xdotool windowactivate $CURRENT
+
+# rotate workspace
+super + alt + {_,shift +}v
+	bspc node @/ -R {90, -90}
 
 # expand a window by moving one of its side outward
 super + alt + {Left,Down,Up,Right}

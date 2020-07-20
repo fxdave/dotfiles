@@ -1,0 +1,5 @@
+[Unit]
+Description=qmenu HUD daemon
+
+[Service]
+ExecStart=/usr/bin/qmenu_registrar

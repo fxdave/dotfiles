@@ -1,23 +1,30 @@
 #!/bin/sh
+
 xrdb ~/.Xresources
+setxkbmap -layout hu
 export SXHKD_SHELL='/usr/bin/sh'
 batwarn -sp 10
 #$HOME/.config/polybar/launch.sh
 sxhkd &
 flameshot & 
+
+# this is not the proper way to start daemons
+killall sxhkd; sxhkd &
+killall dunst; dunst &
+killall flameshot; flameshot &
+killall kdeconnectd; /usr/lib/kdeconnectd &
+killall electron;
 electron Projects/All/Programming/vonal/ -p Projects/All/Programming/vonal/VONALPIPE &
 
 if [ -f /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ] ; then
 	/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 fi
 
-xmodmap ~/bill.Xmodmap
-
-feh --bg-center ~/.config/bspwm/bg.jpg
+xsetroot -solid "#002"
+xsetroot -cursor_name left_ptr
 
 bspc monitor HDMI-A-0 -d A B C D E F G
 bspc monitor eDP-1-1 -d H I
-
 
 bspc config border_width         0
 bspc config window_gap           5
@@ -39,3 +46,4 @@ bspc config history_aware_focus         true
 bspc rule -a Surf:surf state=tiled
 bspc rule -a Vonal manage=off focus=on state=floating follow=on
 bspc rule -a Steam desktop=5 split_dir=right follow=off state=tiled
+bspc rule -a Sublime_text state=tiled
