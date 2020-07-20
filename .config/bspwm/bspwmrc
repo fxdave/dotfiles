@@ -5,8 +5,6 @@ batwarn -sp 10
 #$HOME/.config/polybar/launch.sh
 sxhkd &
 flameshot & 
-killall xflux
-xflux -l 47.0963692 -g 17.9094899
 electron Projects/All/Programming/vonal/ -p Projects/All/Programming/vonal/VONALPIPE &
 
 if [ -f /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ] ; then
