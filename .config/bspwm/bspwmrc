@@ -1,37 +1,33 @@
 #!/bin/sh
 
-xrdb ~/.Xresources
-setxkbmap -layout hu
-export SXHKD_SHELL='/usr/bin/sh'
-batwarn -sp 10
-#$HOME/.config/polybar/launch.sh
-sxhkd &
-flameshot & 
+xrdb ~/.Xresources # Load config for urxvt
+setxkbmap -layout hu # Set the correct keyboard layout for sxhkd
 
-# this is not the proper way to start daemons
-killall sxhkd; sxhkd &
-killall dunst; dunst &
-killall flameshot; flameshot &
-killall kdeconnectd; /usr/lib/kdeconnectd &
-killall electron;
-electron Projects/All/Programming/vonal/ -p Projects/All/Programming/vonal/VONALPIPE &
+# Start daemons:
 
-if [ -f /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ] ; then
-	/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-fi
+batwarn -sp 10 # Brings the gamma up if the battery is lower than 10% 
+systemctl --user restart sxhkd # Keyboard daemon
+systemctl --user restart dunst # Notification daemon
+systemctl --user restart flameshot # Screenshot tool 
+systemctl --user restart kdeconnectd # PC - Phone connection utility 
+systemctl --user kill vonal
+systemctl --user start vonal # Application launcher
+systemctl --user restart gnome-polkit # An app for authentication dialogs
+
+# Handle multiple monitors:
+
+bspc monitor eDP1 -d H I J
+
+# Set styles:
 
 xsetroot -solid "#002"
 xsetroot -cursor_name left_ptr
 
-bspc monitor HDMI-A-0 -d A B C D E F G
-bspc monitor eDP-1-1 -d H I
-
 bspc config border_width         0
 bspc config window_gap           5
-#bspc config top_padding          24
 bspc config top_padding          0
 
-bspc config border_width       3
+bspc config border_width       1
 bspc config normal_border_color "#484848"
 bspc config focused_border_color "#1F8999"
 bspc config urgent_border_color "#B58900"
@@ -42,6 +38,8 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      false
 bspc config focus_follows_pointer       false
 bspc config history_aware_focus         true
+
+# Set App specific rules
 
 bspc rule -a Surf:surf state=tiled
 bspc rule -a Vonal manage=off focus=on state=floating follow=on
