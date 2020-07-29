@@ -31,7 +31,7 @@ URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
 
 !-*- Perl extensions -*-
-URxvt.perl-ext-common: default,selection-to-clipboard,pasta,matcher,keyboard-select,resize-font
+URxvt.perl-ext-common: default,selection-to-clipboard,pasta,matcher,resize-font
 URxvt.resize-font.smaller: C-Up
 URxvt.resize-font.bigger:  C-Down
 
@@ -81,4 +81,4 @@ URxvt.pointerBlank:         true
 *color14: #93e0e3
 *color15: #ffffff
 
-Xft.dpi: 144
+Xft.dpi: 130

@@ -22,7 +22,7 @@ super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, f, z, g, k}
 		nautilus,\
 		context-run urxvt "nautilus %F",\
 		spotify,\
-		com.mattermost.Desktop,\
+		flatpak run com.mattermost.Desktop,\
 		chromium facebook.com/messages,\
 		chromium youtube.com,\
 		xset m 0 0; steam steam://rungameid/730,\
@@ -36,7 +36,7 @@ Menu
 	qmenu_hud
 
 super + l; {p, l , r}
-	{killall -9 electron; systemctl poweroff, systemctl suspend, killall -9 electron; systemctl reboot}
+	systemctl {poweroff,suspend,reboot}
 
 
 super + c; {n, shift + n, s, g}

@@ -15,7 +15,7 @@ systemctl --user restart gnome-polkit # An app for authentication dialogs
 
 # Handle multiple monitors:
 
-bspc monitor eDP1 -d H I J
+bspc monitor -d A B C D E F
 
 # Set styles:
 
