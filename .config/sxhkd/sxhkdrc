@@ -13,7 +13,7 @@ super + p ; {n, o, a, u, d, r}
 
 super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, f, z, g, k}
 	{\
-		dash -c "xcolor | xclip -sel clip",\
+		sh -c 'xcolor | xclip -sel clip',\
 		chromium,\
 		code,\
 		context-run urxvt "code %F",\
@@ -151,7 +151,7 @@ super + {_,shift + }{1-9,0}
 
 # rotate
 super + {_,shift +}v
-	CURRENT=$(xdotool getwindowfocus); bspc node -f @parent; bspc node -R {90, -90}; xdotool windowactivate $CURRENT
+	set CURRENT (xdotool getwindowfocus); bspc node -f @parent; bspc node -R {90, -90}; xdotool windowactivate $CURRENT
 
 # rotate workspace
 super + alt + {_,shift +}v

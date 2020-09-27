@@ -1,0 +1,11 @@
+#!/bin/sh
+EXTERNAL_M="DP1-3"
+INTERNAL_M="eDP1"
+
+move_desktops_to() {
+ 	for line in $(bspc query --desktops); do
+  		bspc desktop "${line}" --to-monitor "${1}"
+  	done	
+}
+
+move_desktops_to "${INTERNAL_M}"

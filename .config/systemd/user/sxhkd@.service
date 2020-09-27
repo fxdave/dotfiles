@@ -1,0 +1,4 @@
+[Service]
+Environment="DISPLAY=%I"
+ExecStart=/usr/bin/sxhkd
+ExecReload=/usr/bin/pkill -USR1 -x sxhkd

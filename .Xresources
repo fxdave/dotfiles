@@ -13,7 +13,7 @@ URxvt.geometry:             90x30
 URxvt.transparent:          false
 URxvt.fading:               0
 URxvt.loginShell:           true
-URxvt.saveLines:            1000
+URxvt.saveLines:            5000
 URxvt.internalBorder:       3
 URxvt.lineSpace:            0
 URxvt.iso14755: false
@@ -31,7 +31,7 @@ URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
 
 !-*- Perl extensions -*-
-URxvt.perl-ext-common: default,selection-to-clipboard,pasta,matcher,resize-font
+URxvt.perl-ext-common: default,selection-to-clipboard,pasta,matcher,resize-font,vtwheel
 URxvt.resize-font.smaller: C-Up
 URxvt.resize-font.bigger:  C-Down
 
@@ -81,4 +81,5 @@ URxvt.pointerBlank:         true
 *color14: #93e0e3
 *color15: #ffffff
 
-Xft.dpi: 130
+! 120 - 180
+Xft.dpi: 120
