@@ -17,7 +17,7 @@ systemctl --user reload-or-restart vonal@"$DISPLAY".service # Application launch
 systemctl --user reload-or-restart gnome-polkit@"$DISPLAY".service # An app for authentication dialogs
 
 # Handle multiple monitors:
-srandrd -n "$HOME/.config/bspwm/display_handler.sh"
+#srandrd -n "$HOME/.config/bspwm/display_handler.sh"
 bspc monitor -d A B C D E F
 
 # Set styles:
@@ -38,8 +38,8 @@ bspc config borderless_monocle   true
 bspc config single_monocle   true
 bspc config gapless_monocle      true
 bspc config focus_follows_pointer       false
-#bspc config remove_disabled_monitor true
-#bspc config remove_unplugged_monitors true
+bspc config remove_disabled_monitor true
+bspc config remove_unplugged_monitors true
 bspc config external_rules_command "/home/dbiro/.config/bspwm/presentation_rule.sh"
 
 # Set App specific rules
