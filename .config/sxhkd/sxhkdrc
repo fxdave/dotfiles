@@ -29,6 +29,9 @@ super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, f, z, g, k}
 		~/birth.sh\
 	}
 
+super + n
+	EDITOR=micro urxvt -e nnn
+
 shift + Menu
 	systemctl --user is-active qmenu_hud && systemctl --user stop qmenu_hud || systemctl --user start qmenu_hud
 
