@@ -7,28 +7,24 @@ echo ./.Xresources | entr -n xrdb ./.Xresources & # X (for urxvt)
 # Set the correct keyboard layout for sxhkd
 setxkbmap -layout hu
 
+# Set touchpad
+xinput set-prop "DELL097D:00 04F3:311C Touchpad" "Synaptics Tap Action" 1, 1, 1, 1, 1, 3 ,0
+
 # Start daemons:
 systemctl --user reload-or-restart batwarn@"$DISPLAY".service # Brings the gamma up if the battery is low
 systemctl --user reload-or-restart sxhkd@"$DISPLAY".service # Keyboard daemon (reloading keeps children)
-systemctl --user reload-or-restart dunst@"$DISPLAY".service # Notification daemon
+systemctl --user reload-or-restart copyq@"$DISPLAY".service # Clipboard
+systemctl --user reload-or-restart notifications@"$DISPLAY".service
 systemctl --user reload-or-restart flameshot@"$DISPLAY".service # Screenshot tool 
-systemctl --user reload-or-restart kdeconnectd@"$DISPLAY".service # PC - Phone connection utility 
-systemctl --user reload-or-restart vonal@"$DISPLAY".service # Application launcher
+systemctl --user reload-or-restart kdeconnectd@"$DISPLAY".service # PC - Phone connection utility
 systemctl --user reload-or-restart gnome-polkit@"$DISPLAY".service # An app for authentication dialogs
 
 # Handle multiple monitors:
-#srandrd -n "$HOME/.config/bspwm/display_handler.sh"
-
-autorandr --change
-
-[ $(autorandr --current) = "default" ] && bspc monitor "DP-1-3" -d A B C D E F
-[ $(autorandr --current) = "mobile" ] && bspc monitor "eDP-1" -d A B C D E F
-[ $(autorandr --current) = "dock-nvidia" ] && bspc monitor "DP-1-1-3" -d A B C D E F
-[ $(autorandr --current) = "mobile-nvidia" ] && bspc monitor "eDP-1-1" -d A B C D E F
+$HOME/.config/bspwm/setup_desktops.sh
 
 # Set styles:
-xsetroot -solid "#002"
-xsetroot -cursor_name left_ptr
+hsetroot -solid "#002"
+hsetroot -cursor_name left_ptr
 bspc config border_width         0
 bspc config window_gap           5
 bspc config top_padding          0
@@ -46,10 +42,11 @@ bspc config gapless_monocle      true
 bspc config focus_follows_pointer       false
 bspc config remove_disabled_monitors true
 bspc config remove_unplugged_monitors true
-bspc config external_rules_command "/home/dbiro/.config/bspwm/presentation_rule.sh"
+#bspc config external_rules_command "/home/dbiro/.config/bspwm/presentation_rule.sh"
 
 # Set App specific rules
 bspc rule -a Surf:surf state=tiled
 bspc rule -a Vonal manage=off focus=on state=floating follow=on
 bspc rule -a Steam desktop=5 split_dir=right follow=off state=tiled
 bspc rule -a Sublime_text state=tiled
+bspc rule -a Emacs state=tiled
