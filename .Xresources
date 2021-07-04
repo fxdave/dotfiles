@@ -31,7 +31,7 @@ URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
 
 !-*- Perl extensions -*-
-URxvt.perl-ext-common: default,selection-to-clipboard,pasta,matcher,resize-font,vtwheel
+URxvt.perl-ext-common: default,selection-to-clipboard,pasta,matcher,resize-font,vtwheel,keyboard-select
 URxvt.resize-font.smaller: C-Up
 URxvt.resize-font.bigger:  C-Down
 
@@ -42,7 +42,7 @@ URxvt.keysym.M-u:     perl:url-select:select_next
 URxvt.url-launcher:   /usr/bin/chromium
 URxvt.underlineURLs:  True
 URxvt.matcher.button: 1 
-!URxvt.keysym.M-Escape:perl:keyboard-select:activate
+URxvt.keysym.C-M-Up: perl:keyboard-select:lines-only
 URxvt.keysym.Control-Shift-V:     perl:pasta:paste
 
 ! Cursor
@@ -82,4 +82,4 @@ URxvt.pointerBlank:         true
 *color15: #ffffff
 
 ! 120 - 180
-Xft.dpi: 120
+Xft.dpi: 180
