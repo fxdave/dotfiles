@@ -1,4 +1,0 @@
-[Service]
-Environment="DISPLAY=%I"
-ExecStart=/usr/bin/electron /home/dbiro/Projects/All/Programming/vonal/ -p /home/dbiro/Projects/All/Programming/vonal/VONALPIPE
-TimeoutStopSec=0.1

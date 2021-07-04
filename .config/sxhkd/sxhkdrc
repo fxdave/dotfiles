@@ -8,10 +8,13 @@ super + {Return, shift + Return, alt + Return}
 		~/.config/bspwm/colored-urxvt.sh,\
 	}
 
+ctrl + shift + v
+	copyq menu
+
 super + p ; {n, o, a, u, d, r}
 	~/Projects/manage.fish {new, open, archive, unarchive, delete, run}
 
-super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, f, z, g, k}
+super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, f, z, a;g, a;a}
 	{\
 		sh -c 'xcolor | xclip -sel clip',\
 		chromium,\
@@ -25,15 +28,17 @@ super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, f, z, g, k}
 		flatpak run com.mattermost.Desktop,\
 		chromium facebook.com/messages,\
 		chromium youtube.com,\
-		xset m 0 0; steam steam://rungameid/730,\
-		~/birth.sh\
+		pw-jack guitarix,\
+		pw-jack ardour6\
 	}
 
 super + n
 	EDITOR=micro urxvt -e nnn
 
 shift + Menu
-	systemctl --user is-active qmenu_hud && systemctl --user stop qmenu_hud || systemctl --user start qmenu_hud
+	systemctl --user is-active qmenu_hud && \
+	systemctl --user stop qmenu_hud || \
+	systemctl --user start qmenu_hud
 
 Menu
 	qmenu_hud
@@ -42,12 +47,17 @@ super + l; {p, l , r}
 	systemctl {poweroff,suspend,reboot}
 
 
-super + c; {n, shift + n, s, g}
+super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, k;u, k;h}
 	{\
 		urxvt -e nmtui,\
 		nm-connection-editor,\
 		pavucontrol,\
-		urxvt -e sh -c "pasuspender -- jackd -d alsa & guitarix"\
+		pw-jack catia,\
+		notify-send 'TODO' 'switch sound to dock',\
+		notify-send 'TODO' 'switch sound to laptop',\
+		notify-send 'TODO' 'switch sound to mixer',\
+    	setxkbmap us,\
+    	setxkbmap hu\
 	}
 
 super + space
@@ -79,15 +89,17 @@ super + Escape
 # xf86
 
 XF86MonBrightnessUp
-	intelbacklight -inc 10000
+	intelbacklight -inc 50
 XF86MonBrightnessDown
-	intelbacklight -dec 10000
+	intelbacklight -dec 50
 
 XF86Calculator
 	urxvt -e sage
 
 XF86AudioPlay
 	playerctl play-pause
+super + XF86AudioPlay
+	playerctl position +99999
 XF86AudioNext
 	playerctl next
 XF86AudioPrev
@@ -97,6 +109,13 @@ XF86AudioLowerVolume
 	pactl set-sink-volume @DEFAULT_SINK@ -10%
 XF86AudioRaiseVolume
 	pactl set-sink-volume @DEFAULT_SINK@ +10%
+
+super + XF86AudioLowerVolume
+	/home/dbiro/.config/bspwm/cycle_sound_sinks.fish left
+super + XF86AudioRaiseVolume
+	/home/dbiro/.config/bspwm/cycle_sound_sinks.fish right
+
+
 XF86AudioMute
 	pactl set-sink-mute @DEFAULT_SINK@ toggle
 
@@ -122,10 +141,6 @@ super + alt + {q,r}
 super + {_,shift + }q
 	bspc node -{c,k}
 
-# close tab
-super + w
-	dash -c 'xdotool key ctrl+w'
-
 # preselect
 super + ctrl + {Left, Down, Up, Right}
 	bspc node -p {west,south,north,east}
@@ -141,8 +156,8 @@ super + {t,shift + t,s,m}
 	bspc node -t {tiled,pseudo_tiled,floating,~fullscreen}
 
 # focus the node in the given direction
-super + {_,shift + }{Left,Down,Up,Right}
-	bspc node -{f,s} {west,south,north,east}
+super + {_,shift + } {Left,Down,Up,Right}
+	bspc node {-f,-s} {west,south,north,east}
 
 # focus the last node/desktop
 super + Tab
@@ -151,6 +166,10 @@ super + Tab
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}';
+
+# rearrange
+super + r
+	bspc node @/ -E
 
 # rotate
 super + {_,shift +}v

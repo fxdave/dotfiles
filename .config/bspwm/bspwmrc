@@ -7,10 +7,14 @@ echo ./.Xresources | entr -n xrdb ./.Xresources & # X (for urxvt)
 # Set the correct keyboard layout for sxhkd
 setxkbmap -layout hu
 
-# Set touchpad
+# Setup touchpad and mouse
+# Enable tap to click (for synaptics driver)
 xinput set-prop "DELL097D:00 04F3:311C Touchpad" "Synaptics Tap Action" 1, 1, 1, 1, 1, 3 ,0
+# Set the mouse acceleration to minimum to be able to use higher mouse DPI
+xinput --set-prop 'pointer:Logitech MX Master 3' 'libinput Accel Speed' -1
 
 # Start daemons:
+systemctl --user reload-or-restart solaar@"$DISPLAY".service # Load logitech MX keys and mouse cfg
 systemctl --user reload-or-restart batwarn@"$DISPLAY".service # Brings the gamma up if the battery is low
 systemctl --user reload-or-restart sxhkd@"$DISPLAY".service # Keyboard daemon (reloading keeps children)
 systemctl --user reload-or-restart copyq@"$DISPLAY".service # Clipboard
