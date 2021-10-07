@@ -47,7 +47,7 @@ super + l; {p, l , r}
 	systemctl {poweroff,suspend,reboot}
 
 
-super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, k;u, k;h}
+super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h}
 	{\
 		urxvt -e nmtui,\
 		nm-connection-editor,\
@@ -56,6 +56,7 @@ super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, k;u, k;h}
 		notify-send 'TODO' 'switch sound to dock',\
 		notify-send 'TODO' 'switch sound to laptop',\
 		notify-send 'TODO' 'switch sound to mixer',\
+		~/.config/bspwm/toggle_rfkill.sh,\		
     	setxkbmap us,\
     	setxkbmap hu\
 	}

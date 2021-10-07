@@ -15,7 +15,7 @@ xinput --set-prop 'pointer:Logitech MX Master 3' 'libinput Accel Speed' -1
 
 # Start daemons:
 systemctl --user reload-or-restart solaar@"$DISPLAY".service # Load logitech MX keys and mouse cfg
-systemctl --user reload-or-restart batwarn@"$DISPLAY".service # Brings the gamma up if the battery is low
+systemctl --user reload-or-restart power-manager@"$DISPLAY".service # Brings the gamma up if the battery is low
 systemctl --user reload-or-restart sxhkd@"$DISPLAY".service # Keyboard daemon (reloading keeps children)
 systemctl --user reload-or-restart copyq@"$DISPLAY".service # Clipboard
 systemctl --user reload-or-restart notifications@"$DISPLAY".service
