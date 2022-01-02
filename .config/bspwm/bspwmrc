@@ -54,3 +54,16 @@ bspc rule -a Vonal manage=off focus=on state=floating follow=on
 bspc rule -a Steam desktop=5 split_dir=right follow=off state=tiled
 bspc rule -a Sublime_text state=tiled
 bspc rule -a Emacs state=tiled
+
+bspc subscribe monitor | while read -r line; do
+  case $line in
+      monitor_add*|monitor_geometry*)
+      	/usr/bin/autorandr --change
+      ;;
+      monitor_remove*)
+        /usr/bin/autorandr --change
+      ;;
+      *)
+      ;;
+  esac
+done &

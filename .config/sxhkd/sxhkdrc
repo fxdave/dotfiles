@@ -36,9 +36,9 @@ super + n
 	EDITOR=micro urxvt -e nnn
 
 shift + Menu
-	systemctl --user is-active qmenu_hud && \
-	systemctl --user stop qmenu_hud || \
-	systemctl --user start qmenu_hud
+	systemctl --user is-active qmenu_hud@$DISPLAY.service && \
+	systemctl --user stop qmenu_hud@$DISPLAY.service || \
+	systemctl --user start qmenu_hud@$DISPLAY.service
 
 Menu
 	qmenu_hud

@@ -9,7 +9,7 @@ if test $argv = "new"
 else if test $argv = "open"
 	set name (zenity --list --column "Project" (ls ~/Projects/Actual/))
 	echo opening $name
-	urxvt -e sh -c "cd ~/Projects/Actual/$name; fish"
+	urxvt -e sh -c "cd \$(realpath ~/Projects/Actual/$name); fish"
 else if test $argv = "run"
 	set name (zenity --list --column "Project" (ls ~/Projects/Actual/))
 	echo opening $name

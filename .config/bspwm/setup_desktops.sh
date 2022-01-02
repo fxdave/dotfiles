@@ -1,6 +1,12 @@
 #!/bin/sh
 
+
 MONITORS=($(xrandr | grep -Po "^[^ ]+ (connected)" | cut -d' ' -f1 | sort -r))
+
+# turn eDP-1 off when the lid is closed
+cat /proc/acpi/button/lid/LID0/state | grep closed \
+	&& xrandr --output eDP-1 --off
+
 
 # For one monitor I create 5 desktops
 [[ "${#MONITORS[@]}" == 1 ]] && {
