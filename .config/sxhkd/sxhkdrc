@@ -48,7 +48,7 @@ Menu
 	qmenu_hud
 
 super + l; {p, l , r}
-	{systemctl poweroff, xflock4, systemctl reboot}
+	{systemctl poweroff, slock systemctl suspend -i, systemctl reboot}
 
 
 super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h}
