@@ -1,5 +1,4 @@
 [Service]
-Environment="DISPLAY=%I"
 ExecStart=/usr/bin/copyq
 TimeoutStopSec=0.1
 Restart=on-failure

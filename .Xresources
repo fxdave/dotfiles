@@ -31,7 +31,7 @@ URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
 
 !-*- Perl extensions -*-
-URxvt.perl-ext-common: default,selection-to-clipboard,pasta,matcher,resize-font,vtwheel,keyboard-select
+URxvt.perl-ext-common: default,pasta,matcher,resize-font,vtwheel,keyboard-select
 URxvt.resize-font.smaller: C-Up
 URxvt.resize-font.bigger:  C-Down
 
@@ -39,11 +39,13 @@ URxvt.keysym.C-Down:  resize-font:smaller
 URxvt.keysym.C-Up:    resize-font:bigger
 
 URxvt.keysym.M-u:     perl:url-select:select_next
-URxvt.url-launcher:   /usr/bin/chromium
+URxvt.url-launcher:   xdg-open
 URxvt.underlineURLs:  True
+URxvt.matcher.pattern.1: (\\.?\\.?\/)+(home|src)/[^ ]+.(j|t)sx?
 URxvt.matcher.button: 1 
 URxvt.keysym.C-M-Up: perl:keyboard-select:lines-only
-URxvt.keysym.Control-Shift-V:     perl:pasta:paste
+URxvt.keysym.Control-Shift-V:    perl:pasta:paste
+URxvt.keysym.Control-Shift-C: eval:selection_to_clipboard
 
 ! Cursor
 URxvt.cursorBlink:          true

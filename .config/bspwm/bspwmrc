@@ -7,28 +7,25 @@ echo ./.Xresources | entr -n xrdb ./.Xresources & # X (for urxvt)
 # Set the correct keyboard layout for sxhkd
 setxkbmap -layout hu
 
-# Setup touchpad and mouse
-# Enable tap to click (for synaptics driver)
-xinput set-prop "DELL097D:00 04F3:311C Touchpad" "Synaptics Tap Action" 1, 1, 1, 1, 1, 3 ,0
-# Set the mouse acceleration to minimum to be able to use higher mouse DPI
-xinput --set-prop 'pointer:Logitech MX Master 3' 'libinput Accel Speed' -1
+# Enable tap to click
+xinput set-prop "DELL097D:00 04F3:311C Touchpad" "libinput Tapping Enabled" 1
 
 # Start daemons:
-systemctl --user reload-or-restart solaar@"$DISPLAY".service # Load logitech MX keys and mouse cfg
-systemctl --user reload-or-restart power-manager@"$DISPLAY".service # Brings the gamma up if the battery is low
-systemctl --user reload-or-restart sxhkd@"$DISPLAY".service # Keyboard daemon (reloading keeps children)
-systemctl --user reload-or-restart copyq@"$DISPLAY".service # Clipboard
-systemctl --user reload-or-restart notifications@"$DISPLAY".service
-systemctl --user reload-or-restart flameshot@"$DISPLAY".service # Screenshot tool 
-systemctl --user reload-or-restart kdeconnectd@"$DISPLAY".service # PC - Phone connection utility
-systemctl --user reload-or-restart gnome-polkit@"$DISPLAY".service # An app for authentication dialogs
+#systemctl --user reload-or-restart power-manager.service # Brings the gamma up if the battery is low
+systemctl --user import-environment $(env | grep -Po '^[a-zA-Z_]+')
+systemctl --user reload-or-restart sxhkd.service # Keyboard daemon (reloading keeps children)
+systemctl --user reload-or-restart copyq.service # Clipboard
+systemctl --user reload-or-restart notifications.service
+systemctl --user reload-or-restart flameshot.service # Screenshot tool 
+systemctl --user reload-or-restart kdeconnectd.service # PC - Phone connection utility
+systemctl --user reload-or-restart gnome-polkit.service # An app for authentication dialogs
 
 # Handle multiple monitors:
 $HOME/.config/bspwm/setup_desktops.sh
 
 # Set styles:
 hsetroot -solid "#002"
-hsetroot -cursor_name left_ptr
+#hsetroot -cursor_name left_ptr
 bspc config border_width         0
 bspc config window_gap           5
 bspc config top_padding          0
@@ -55,15 +52,17 @@ bspc rule -a Steam desktop=5 split_dir=right follow=off state=tiled
 bspc rule -a Sublime_text state=tiled
 bspc rule -a Emacs state=tiled
 
-bspc subscribe monitor | while read -r line; do
-  case $line in
-      monitor_add*|monitor_geometry*)
-      	/usr/bin/autorandr --change
-      ;;
-      monitor_remove*)
-        /usr/bin/autorandr --change
-      ;;
-      *)
-      ;;
-  esac
-done &
+#bspc subscribe monitor | while read -r line; do
+#  case $line in
+#      monitor_add*|monitor_geometry*)
+#      	echo 'added monitor' | systemd-cat -p warning
+#      	
+#      ;;
+#      monitor_remove*)
+#      	echo 'remove monitor' | systemd-cat -p warning
+#        /usr/bin/autorandr --load horizontal
+#      ;;
+#      *)
+#      ;;
+#  esac
+#done &

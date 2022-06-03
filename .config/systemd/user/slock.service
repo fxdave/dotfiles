@@ -1,0 +1,12 @@
+[Unit]
+Description=A simple X screen locker
+#Requisite=graphical-session.target
+#PartOf=lock.target
+
+[Service]
+ExecStart=/usr/bin/slock -- systemctl suspend -i
+# Unlock the session when the screen locker exit:
+ExecStopPost=/usr/bin/loginctl unlock-session
+
+[Install]
+WantedBy=lock.target

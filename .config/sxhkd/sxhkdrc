@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+
+#super + a
+#	notify-send hi
+
 # apps
 super + {Return, shift + Return, alt + Return}
 	{\
@@ -22,8 +26,8 @@ super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, f, z, a;g, a;a
 		context-run urxvt "code %F",\
 		subl,\
 		context-run urxvt "subl %F",\
-		nautilus,\
-		context-run urxvt "nautilus %F",\
+		thunar,\
+		context-run urxvt "thunar %F",\
 		spotify,\
 		flatpak run com.mattermost.Desktop,\
 		chromium facebook.com/messages,\
@@ -44,7 +48,7 @@ Menu
 	qmenu_hud
 
 super + l; {p, l , r}
-	systemctl {poweroff,suspend,reboot}
+	{systemctl poweroff, xflock4, systemctl reboot}
 
 
 super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h}
