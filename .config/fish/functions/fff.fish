@@ -12,6 +12,9 @@ function fff_prepare_files
 end
 
 function fff
-  set files (find . -not -path "*/node_modules/*" | xargs file | rg text | rg -v long | cut -d':' -f1)
+  set files (
+    find . -not -path "*/node_modules/*" -exec sh -c 'echo -n '{}':; file -b "{}"' \;\
+    | rg text | rg -v long | cut -d':' -f1
+  )
   fff_prepare_files $files | fzf --ansi
 end
