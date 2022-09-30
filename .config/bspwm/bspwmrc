@@ -1,4 +1,5 @@
 #!/bin/bash
+export GTK_MODULES=appmenu-gtk-module
 
 # Automatizations:
 echo $HOME/.config/sxhkd/sxhkdrc | entr -np pkill -USR1 -x sxhkd & # Sxhkd
@@ -16,9 +17,12 @@ systemctl --user import-environment $(env | grep -Po '^[a-zA-Z_]+')
 systemctl --user reload-or-restart sxhkd.service # Keyboard daemon (reloading keeps children)
 systemctl --user reload-or-restart copyq.service # Clipboard
 systemctl --user reload-or-restart notifications.service
-systemctl --user reload-or-restart flameshot.service # Screenshot tool 
+systemctl --user reload-or-restart flameshot.service # Screenshot tool
 systemctl --user reload-or-restart kdeconnectd.service # PC - Phone connection utility
 systemctl --user reload-or-restart gnome-polkit.service # An app for authentication dialogs
+systemctl --user reload-or-restart qmenu_hud.service # HUD
+#systemctl --user reload-or-restart picom.service # HUD
+gnome-keyring-daemon
 
 # Handle multiple monitors:
 $HOME/.config/bspwm/setup_desktops.sh

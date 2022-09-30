@@ -83,5 +83,12 @@ URxvt.pointerBlank:         true
 *color14: #93e0e3
 *color15: #ffffff
 
-! 120 - 180
-Xft.dpi: 180
+! 157
+Xft.dpi: 157
+
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb

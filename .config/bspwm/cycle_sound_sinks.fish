@@ -16,18 +16,16 @@ else
     set SINKS (echo $SINKS | string split ' ' | sort)
 end
 
-
 function set_default_sink
     set -l sink_id $argv[1]
-    set -l sink_name (pactl list sinks | grep -Pzo "Sink #$sink_id(.*\n)*" | sed \$d | sed -n "s/^.*device.description = \"\(.*\)\".*\$/\1/p" | head -n1)
+    set -l sink_name (pactl list sinks | grep -Pzo "Sink #$sink_id(.*\n)*" | sed \$d | sed -n "s/^.*Description: \(.*\).*\$/\1/p" | head -n1)
     pactl set-default-sink $sink_id
 	
     for sink_input in $SINK_INPUTS
         pactl move-sink-input $sink_input $sink_id
     end
-    
-    notify-send.sh -R /var/tmp/last_sound_sink_notification_id \
-	 -u critical \
+    test -e /var/tmp/last_sound_sink_notification_id || echo 0 > /var/tmp/last_sound_sink_notification_id
+    notify-desktop -R /var/tmp/last_sound_sink_notification_id \
 	 "Default has changed to" "$sink_name"
 end
 

@@ -1,2 +1,2 @@
 [Service]
-ExecStart=/usr/bin/twmnd
+ExecStart=/usr/lib/xfce4/notifyd/xfce4-notifyd

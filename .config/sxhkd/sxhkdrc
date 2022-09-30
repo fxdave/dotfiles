@@ -1,9 +1,5 @@
 #!/usr/bin/env sh
 
-
-#super + a
-#	notify-send hi
-
 # apps
 super + {Return, shift + Return, alt + Return}
 	{\
@@ -40,18 +36,18 @@ super + n
 	EDITOR=micro urxvt -e nnn
 
 shift + Menu
-	systemctl --user is-active qmenu_hud@$DISPLAY.service && \
-	systemctl --user stop qmenu_hud@$DISPLAY.service || \
-	systemctl --user start qmenu_hud@$DISPLAY.service
+	systemctl --user is-active qmenu_hud.service && \
+	systemctl --user stop qmenu_hud.service || \
+	systemctl --user start qmenu_hud.service
 
 Menu
-	qmenu_hud
+	hud
 
 super + l; {p, l , r}
 	{systemctl poweroff, slock systemctl suspend -i, systemctl reboot}
 
 
-super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h}
+super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h, d;d, d;a, d;o}
 	{\
 		urxvt -e nmtui,\
 		nm-connection-editor,\
@@ -62,11 +58,14 @@ super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h}
 		notify-send 'TODO' 'switch sound to mixer',\
 		~/.config/bspwm/toggle_rfkill.sh,\		
     	setxkbmap us,\
-    	setxkbmap hu\
+    	setxkbmap hu,\
+    	autorandr --load horizontal,\
+    	xrandr --output $(.config/bspwm/select_display.sh) --auto,\
+    	xrandr --output $(.config/bspwm/select_display.sh) --off\
 	}
 
 super + space
-	echo 'show' > /home/dbiro/Projects/All/Programming/vonal/VONALPIPE
+	/home/dbiro/Projects/All/Programming/vonal-rust/target/release/vonal-rust
 
 shift + Print
 	killall ffcast || ffcast -s byzanz-record --x=%x --y=%y --width=%w --height=%h ~/Pictures/recorded_region.gif
