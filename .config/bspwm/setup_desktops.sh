@@ -23,6 +23,7 @@ cat /proc/acpi/button/lid/LID0/state | grep closed \
 # TODO: This should check the real size of the monitor, 
 #		setup 5 desktops for the biggest 3 for each other.
 [[ "${#MONITORS[@]}" != 1 ]] && {
+	FIRST_MONITOR=${MONITORS[0]}
 	SECOND_MONITOR=${MONITORS[1]}
 	REST_OF_MONITOR=${MONITORS[@]:2}
 
