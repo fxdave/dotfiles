@@ -9,7 +9,7 @@
 !Xft.hintstyle:              hintslight
 
 URxvt.depth:                32
-URxvt.geometry:             90x30
+URxvt.geometry:             100x100-11-34
 URxvt.transparent:          false
 URxvt.fading:               0
 URxvt.loginShell:           true
@@ -44,7 +44,7 @@ URxvt.underlineURLs:  True
 URxvt.matcher.pattern.1: (\\.?\\.?\/)+(home|src)/[^ ]+.(j|t)sx?
 URxvt.matcher.button: 1 
 URxvt.keysym.C-M-Up: perl:keyboard-select:lines-only
-URxvt.keysym.Control-Shift-V:    perl:pasta:paste
+URxvt.keysym.Control-V:    perl:pasta:paste
 URxvt.keysym.Control-Shift-C: eval:selection_to_clipboard
 
 ! Cursor
