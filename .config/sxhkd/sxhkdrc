@@ -65,7 +65,8 @@ super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h, d;d, d;a, 
 	}
 
 super + space
-	/home/dbiro/Projects/All/Programming/vonal-rust/target/release/vonal-rust
+	/home/dbiro/Projects/All/Programming/vonal-rust/target/release/vonalc toggle
+
 
 shift + Print
 	killall ffcast || ffcast -s byzanz-record --x=%x --y=%y --width=%w --height=%h ~/Pictures/recorded_region.gif
@@ -105,14 +106,18 @@ XF86AudioPlay
 super + XF86AudioPlay
 	playerctl position +99999
 XF86AudioNext
-	playerctl next
+	playerctl position 2+
 XF86AudioPrev
-	playerctl prev
+	playerctl position 2-
 
 XF86AudioLowerVolume
 	pactl set-sink-volume @DEFAULT_SINK@ -10%
+shift + XF86AudioLowerVolume
+	pactl set-sink-volume @DEFAULT_SINK@ -1%
 XF86AudioRaiseVolume
 	pactl set-sink-volume @DEFAULT_SINK@ +10%
+shift + XF86AudioRaiseVolume
+	pactl set-sink-volume @DEFAULT_SINK@ +1%
 
 super + XF86AudioLowerVolume
 	/home/dbiro/.config/bspwm/cycle_sound_sinks.fish left
