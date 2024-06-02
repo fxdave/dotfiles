@@ -11,13 +11,17 @@ super + {Return, shift + Return, alt + Return}
 ctrl + shift + v
 	copyq menu
 
+super + space ; {x, p, 7}
+	/home/dbiro/Projects/All/Programming/vonal/vonal/target/release/vonalc {toggle, set_query "pass " show, set_query "= " show}
+
 super + p ; {n, o, a, u, d, r}
 	~/Projects/manage.fish {new, open, archive, unarchive, delete, run}
 
+
 super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, f, z, a;g, a;a}
 	{\
-		sh -c 'xcolor | xclip -sel clip',\
-		chromium,\
+		sh -c 'xcolor | sed -Ez "\$ s/\n+\$//" | xclip -sel clip',\
+		firefox &> /dev/null,\
 		code,\
 		context-run urxvt "code %F",\
 		subl,\
@@ -26,8 +30,8 @@ super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, f, z, a;g, a;a
 		context-run urxvt "thunar %F",\
 		spotify,\
 		flatpak run com.mattermost.Desktop,\
-		chromium facebook.com/messages,\
-		chromium youtube.com,\
+		firefox "https://messenger.com",\
+		firefox "https://youtube.com" &> /dev/null,\
 		pw-jack guitarix,\
 		pw-jack ardour6\
 	}
@@ -44,10 +48,10 @@ Menu
 	hud
 
 super + l; {p, l , r}
-	{systemctl poweroff, slock systemctl suspend -i, systemctl reboot}
+	{systemctl poweroff, systemctl hibernate, systemctl reboot}
 
 
-super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h, d;d, d;a, d;o}
+super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h, d;d, d;a, d;o, d;l}
 	{\
 		urxvt -e nmtui,\
 		nm-connection-editor,\
@@ -61,12 +65,9 @@ super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h, d;d, d;a, 
     	setxkbmap hu,\
     	autorandr --load horizontal,\
     	xrandr --output $(.config/bspwm/select_display.sh) --auto,\
-    	xrandr --output $(.config/bspwm/select_display.sh) --off\
+    	xrandr --output $(.config/bspwm/select_display.sh) --off,\
+    	xrandr --output $(xrandr | grep " connected" | cut -d' ' -f1) --mode 2560x1600\
 	}
-
-super + space
-	/home/dbiro/Projects/All/Programming/vonal-rust/target/release/vonalc toggle
-
 
 shift + Print
 	killall ffcast || ffcast -s byzanz-record --x=%x --y=%y --width=%w --height=%h ~/Pictures/recorded_region.gif
@@ -163,6 +164,9 @@ super + ctrl + space
 # set the window state
 super + {t,shift + t,s,m}
 	bspc node -t {tiled,pseudo_tiled,floating,~fullscreen}
+
+super + shift + h
+	bspc node -g hidden
 
 # focus the node in the given direction
 super + {_,shift + } {Left,Down,Up,Right}

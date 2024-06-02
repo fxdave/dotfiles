@@ -1,9 +1,15 @@
 #!/bin/bash
 export GTK_MODULES=appmenu-gtk-module
+export GTK_THEME=Adwaita:dark 
+export MOZ_USE_XINPUT2=1
+export LIBVA_DRIVER_NAME=$(ls /etc/X11/xorg.conf.d/10-use-nvidia-only.conf &> /dev/null && echo "nvidia" || echo "iHD")
+
+xinput --set-prop 'pointer:Logitech MX Master 3' 'libinput Accel Speed' 1
 
 # Automatizations:
 echo $HOME/.config/sxhkd/sxhkdrc | entr -np pkill -USR1 -x sxhkd & # Sxhkd
 echo ./.Xresources | entr -n xrdb ./.Xresources & # X (for urxvt)
+lowbattery &
 
 # Set the correct keyboard layout for sxhkd
 setxkbmap -layout hu
@@ -12,18 +18,31 @@ setxkbmap -layout hu
 xinput set-prop "DELL097D:00 04F3:311C Touchpad" "libinput Tapping Enabled" 1
 
 # Start daemons:
+systemctl --user import-environment $(env | grep -Po '^[a-zA-Z_0-9]+')
+
+if command -v dbus-update-activation-environment >/dev/null 2>&1; then 
+    dbus-update-activation-environment DISPLAY XAUTHORITY
+fi
+
 #systemctl --user reload-or-restart power-manager.service # Brings the gamma up if the battery is low
-systemctl --user import-environment $(env | grep -Po '^[a-zA-Z_]+')
 systemctl --user reload-or-restart sxhkd.service # Keyboard daemon (reloading keeps children)
 systemctl --user reload-or-restart copyq.service # Clipboard
 systemctl --user reload-or-restart notifications.service
 systemctl --user reload-or-restart flameshot.service # Screenshot tool
 systemctl --user reload-or-restart kdeconnectd.service # PC - Phone connection utility
 systemctl --user reload-or-restart gnome-polkit.service # An app for authentication dialogs
-systemctl --user reload-or-restart qmenu_hud.service # HUD
-#systemctl --user reload-or-restart picom.service # HUD
+#systemctl --user reload-or-restart qmenu_hud.service # HUD Turned off because the the AUR package doesn't compile
+systemctl --user reload-or-restart vonal.service # vonal
+#systemctl --user reload-or-restart picom.service # compositor
 gnome-keyring-daemon
-/home/dbiro/Projects/All/Programming/vonal-rust/target/release/vonal &
+
+# screensaver
+xset s 120 15
+xset dpms 140 3600 3600
+xss-lock -n /home/dbiro/.config/bspwm/dim_screen.sh -- slock &
+xssproxy -v &
+
+env > $HOME/start.env
 
 # Handle multiple monitors:
 $HOME/.config/bspwm/setup_desktops.sh
@@ -56,6 +75,7 @@ bspc rule -a vonal state=floating border=off
 bspc rule -a Steam desktop=5 split_dir=right follow=off state=tiled
 bspc rule -a Sublime_text state=tiled
 bspc rule -a Emacs state=tiled
+bspc rule -a zenity state=floating
 
 #bspc subscribe monitor | while read -r line; do
 #  case $line in

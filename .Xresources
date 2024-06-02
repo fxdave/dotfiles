@@ -22,7 +22,7 @@ URxvt.iso14755_52: false
 URxvt.allow_bold:           false
 URxvt*font: xft:Droid Sans Mono for Powerline:regular:size=12
 
-xterm*font: xft:Droid Sans Mono for Powerline:regular:size=12
+xterm*font: xft:Droid Sans Mono:regular:size=12
 ! Fix font space
 URxvt*letterSpace: -1
 
@@ -31,7 +31,7 @@ URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
 
 !-*- Perl extensions -*-
-URxvt.perl-ext-common: default,pasta,matcher,resize-font,vtwheel,keyboard-select
+URxvt.perl-ext-common: default,pasta,matcher,resize-font,vtwheel,keyboard-select,dragscroll
 URxvt.resize-font.smaller: C-Up
 URxvt.resize-font.bigger:  C-Down
 
