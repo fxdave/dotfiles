@@ -1,5 +1,5 @@
 [Service]
-ExecStart=/usr/lib/kdeconnectd --replace
+ExecStart=/usr/bin/kdeconnectd --replace
 
 [Unit]
 Requires=notifications.service

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # apps
 super + {Return, shift + Return, alt + Return}
@@ -16,7 +16,6 @@ super + space ; {x, p, 7}
 
 super + p ; {n, o, a, u, d, r}
 	~/Projects/manage.fish {new, open, archive, unarchive, delete, run}
-
 
 super + x ; { x, c, shift+v, v, shift+s, s, shift+n, n, alt+s, m, f, z, a;g, a;a}
 	{\
@@ -112,13 +111,16 @@ XF86AudioPrev
 	playerctl position 2-
 
 XF86AudioLowerVolume
-	pactl set-sink-volume @DEFAULT_SINK@ -10%
+    ~/.config/bspwm/volume_control.sh down
+
 shift + XF86AudioLowerVolume
-	pactl set-sink-volume @DEFAULT_SINK@ -1%
+    ~/.config/bspwm/volume_control.sh down-small
+
 XF86AudioRaiseVolume
-	pactl set-sink-volume @DEFAULT_SINK@ +10%
+    ~/.config/bspwm/volume_control.sh up
+
 shift + XF86AudioRaiseVolume
-	pactl set-sink-volume @DEFAULT_SINK@ +1%
+    ~/.config/bspwm/volume_control.sh up-small
 
 super + XF86AudioLowerVolume
 	/home/dbiro/.config/bspwm/cycle_sound_sinks.fish left
@@ -127,7 +129,7 @@ super + XF86AudioRaiseVolume
 
 
 XF86AudioMute
-	pactl set-sink-mute @DEFAULT_SINK@ toggle
+	~/.config/bspwm/volume_control.sh mute
 
 alt + XF86AudioLowerVolume
 	pactl set-source-volume @DEFAULT_SOURCE@ -10%
@@ -144,8 +146,11 @@ alt + XF86AudioMute
 #
 
 # quit/restart bspwm
-super + alt + {q,r}
-	bspc {quit,wm -r}
+super + alt + r
+	bspc wm -r
+
+super + alt + q
+	bspc quit & systemctl --user isolate default
 
 # close/kill
 super + {_,shift + }q
