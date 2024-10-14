@@ -9,6 +9,7 @@ test -f "${XORG_CONF}" && {
 	export LIBVA_DRIVER_NAME=nvidia
 	echo "Setting xrandr"
 
+	xrandr --setprovideroutputsource modesetting NVIDIA-0
 	xrandr --auto
 }
 

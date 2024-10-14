@@ -4,7 +4,7 @@
 super + {Return, shift + Return, alt + Return}
 	{\
 		~/.config/bspwm/context-run-urxvt.sh,\
-		urxvt,\
+		urxvt -e fish,\
 		~/.config/bspwm/colored-urxvt.sh,\
 	}
 

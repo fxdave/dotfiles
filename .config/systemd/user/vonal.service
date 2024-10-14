@@ -1,0 +1,2 @@
+[Service]
+ExecStart=/home/dbiro/Projects/All/Programming/vonal/vonal/target/release/vonal

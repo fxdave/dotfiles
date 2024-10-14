@@ -25,8 +25,6 @@ if command -v dbus-update-activation-environment >/dev/null 2>&1; then
     dbus-update-activation-environment DISPLAY XAUTHORITY
 fi
 
-easyeffects --gapplication-service &
-
 #systemctl --user reload-or-restart power-manager.service # Brings the gamma up if the battery is low
 systemctl --user reload-or-restart sxhkd.service # Keyboard daemon (reloading keeps children)
 systemctl --user reload-or-restart copyq.service # Clipboard
