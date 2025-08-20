@@ -12,6 +12,10 @@ AddPackage bash-completion # Programmable completion for the bash shell
 AddPackage --foreign paru # Feature packed AUR helper
 AddPackage --foreign paru-debug # Detached debugging symbols for paru
 
+AddPackage docker # Pack, ship and run any application as a lightweight container
+AddPackage docker-compose # Fast, isolated development environments using Docker
+AddPackage less # A terminal based program for viewing text files
+
 AddPackage nvidia # NVIDIA drivers for linux
 AddPackage tlp # Linux Advanced Power Management
 IgnorePath /etc/X11/xorg.conf.d/10-use-nvidia-only.conf
