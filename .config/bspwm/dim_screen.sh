@@ -16,16 +16,22 @@ set_brightness() {
 	done
 }
 
+set_max() {
+	set_brightness 100
+	echo "$(date): ON" >> ~/screen.log
+}
+
 fade_brightness() {
     local level
     for level in $(eval echo {100..$1}); do
         set_brightness $level
         sleep $fade_step_time
     done
+    echo "$(date): OFF" >> ~/screen.log
 }
 
 trap 'exit 0' TERM INT
-trap "set_brightness 100; kill %%" EXIT
+trap "set_max; kill %%" EXIT
 fade_brightness $min_brightness
 sleep 2147483647 &
 wait
