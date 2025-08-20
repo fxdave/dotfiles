@@ -20,10 +20,20 @@ URxvt.iso14755: false
 URxvt.iso14755_52: false
 ! Fonts
 URxvt.allow_bold:           false
-URxvt*font: xft:Droid Sans Mono for Powerline:regular:size=12
 
-xterm*font: xft:Droid Sans Mono:regular:size=12
-! Fix font space
+! Font stack with fallback for icons and emojis
+URxvt*font: xft:Droid Sans Mono for Powerline:size=12,\
+             xft:Symbols Nerd Font:size=12,\
+             xft:Noto Color Emoji:size=12,\
+             xft:DejaVu Sans:size=12
+
+! Same for xterm if needed
+xterm*font: xft:Droid Sans Mono for Powerline:size=12,\
+             xft:Symbols Nerd Font:size=12,\
+             xft:Noto Color Emoji:size=12,\
+             xft:DejaVu Sans:size=12
+
+! Fix font spacing
 URxvt*letterSpace: -1
 
 ! Scrollbar
