@@ -1,48 +1,65 @@
-#!/usr/bin/fish
-
+#!/bin/bash
 # USAGE
-# Cycle trough sinks
-# ./script_name.fish left
-# ./script_name.fish right
+# Cycle through sinks
+# ./script_name.sh left
+# ./script_name.sh right
+notify() {
+  $HOME/.config/bspwm/notify.sh sink "${@:1}"
+}
 
-set DEFAULT_SINK_NAME (pactl info | sed -n "s/^Default Sink: \(.*\$\)/\1/p")
-set DEFAULT_SINK_ID (pactl list sinks short | sed -n "s/^\([0-9]*\)\s\($DEFAULT_SINK_NAME\).*\$/\1/p")
-set SINKS (pactl list sinks short | sed -n "s/^\([0-9]*\)\s.*\$/\1/p")
-set SINK_INPUTS (pactl list sink-inputs short | sed -n "s/^\([0-9]*\)\s.*\$/\1/p")
+# File to remember last sink index
+STATE_FILE="/tmp/next-sink-index"
 
-if test $argv[1] = "left"
-    set SINKS (echo $SINKS | string split ' ' | sort -r)
+# Get all sink names (sorted alphabetically for stable order)
+sinks=($(pactl list short sinks | awk '{print $2}' | sort))
+
+
+# Build an associative array sink_name -> description
+declare -A sink_desc
+while IFS= read -r line; do
+  if [[ $line =~ Name:\ (.+) ]]; then
+    current_sink="${BASH_REMATCH[1]}"
+  elif [[ $line =~ Description:\ (.+) ]]; then
+    sink_desc["$current_sink"]="${BASH_REMATCH[1]}"
+  fi
+done < <(pactl list sinks)
+
+# Load last index, default to -1 if file doesn't exist
+if [[ -f "$STATE_FILE" ]]; then
+  last_index=$(<"$STATE_FILE")
 else
-    set SINKS (echo $SINKS | string split ' ' | sort)
-end
+  last_index=-1
+fi
 
-function set_default_sink
-    set -l sink_id $argv[1]
-    set -l sink_name (pactl list sinks | grep -Pzo "Sink #$sink_id(.*\n)*" | sed \$d | sed -n "s/^.*Description: \(.*\).*\$/\1/p" | head -n1)
-    pactl set-default-sink $sink_id
-	
-    for sink_input in $SINK_INPUTS
-        pactl move-sink-input $sink_input $sink_id
-    end
-    test -e /var/tmp/last_sound_sink_notification_id || echo 0 > /var/tmp/last_sound_sink_notification_id
-    notify-desktop -R /var/tmp/last_sound_sink_notification_id \
-	 "Default has changed to" "$sink_name"
-end
+# Determine direction
+direction=${1:-right}  # default = right
+
+if [[ "$direction" == "right" ]]; then
+  next_index=$(( (last_index + 1) % ${#sinks[@]} ))
+elif [[ "$direction" == "left" ]]; then
+  next_index=$(( (last_index - 1 + ${#sinks[@]}) % ${#sinks[@]} ))
+else
+  echo "Usage: $0 [left|right]"
+  exit 1
+fi
 
 
-set next_will_be_the_default false
-for sink in $SINKS
-	if $next_will_be_the_default
-        set next_will_be_the_default false
-        set_default_sink $sink
-	end
-	
-	if test $sink = $DEFAULT_SINK_ID
-        set next_will_be_the_default true
-	end
-end
+# Set next sink as default
+pactl set-default-sink "${sinks[$next_index]}"
 
-if $next_will_be_the_default
-    set next_will_be_the_default false
-    set_default_sink $SINKS[1]
-end
+# Move existing inputs
+for input in $(pactl list short sink-inputs | awk '{print $1}'); do
+  pactl move-sink-input "$input" "${sinks[$next_index]}"
+done
+
+# Save the index for next time
+echo "$next_index" > "$STATE_FILE"
+
+
+next_sink="${sinks[$next_index]}"
+# Get friendly description for next_sink
+friendly_name=$(pactl list sinks | awk -v sink="$next_sink" '
+  $1=="Name:" {current=$2}
+  $1=="Description:" && current==sink {$1=""; print substr($0,2)}')
+
+notify "🔊 ${friendly_name}"
