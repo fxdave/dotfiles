@@ -50,8 +50,9 @@ super + l; {p, l , r}
 	{systemctl poweroff, systemctl hibernate, systemctl reboot}
 
 
-super + c; {n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h, d;d, d;a, d;o, d;l}
+super + c; {b, n, shift + n, a;a, a;j, a;s;d, a;s;l, a;s;m, w, k;u, k;h, d;d, d;a, d;o, d;l}
 	{\
+		blueberry,\
 		urxvt -e nmtui,\
 		nm-connection-editor,\
 		pavucontrol,\
@@ -191,7 +192,7 @@ super + r
 
 # rotate
 super + {_,shift +}v
-	set CURRENT (xdotool getwindowfocus); bspc node -f @parent; bspc node -R {90, -90}; xdotool windowactivate $CURRENT
+	CURRENT=$(xdotool getwindowfocus); bspc node -f @parent; bspc node -R {90, -90}; xdotool windowactivate $CURRENT
 
 # rotate workspace
 super + alt + {_,shift +}v
