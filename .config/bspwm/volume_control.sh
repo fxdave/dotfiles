@@ -1,17 +1,7 @@
 #!/bin/bash
 
-NOTIFY_ID_FILE="$HOME/.volume_notify_id"
-
-get_notify_id() {
-    if [ -f "$NOTIFY_ID_FILE" ]; then
-        cat "$NOTIFY_ID_FILE"
-    else
-        echo "0"
-    fi
-}
-
-set_notify_id() {
-    echo "$1" > "$NOTIFY_ID_FILE"
+notify() {
+    $HOME/.config/bspwm/notify.sh volume "${@:1}"
 }
 
 adjust_volume() {
@@ -20,29 +10,20 @@ adjust_volume() {
 
     pactl set-sink-volume @DEFAULT_SINK@ "$change"
     local volume=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+(?=%)' | head -n 1)
-    
-    local notify_id=$(get_notify_id)
-    if [[ "$notify_id" =~ ^[0-9]+$ ]]; then
-        new_id=$(notify-send -p -u low -h int:value:"$volume" -r "$notify_id" "Volume" "$description to $volume%")
-    else
-        new_id=$(notify-send -p -u low -h int:value:"$volume" "Volume" "$description to $volume%")
-    fi
-    set_notify_id "$new_id"
+
+    notify -u low -h int:value:"$volume"  "Volume" "$description to $volume%"
 }
 
 mute_unmute_volume() {
     local state=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
-    local notify_id=$(get_notify_id)
 
     if [ "$state" = "yes" ]; then
         pactl set-sink-mute @DEFAULT_SINK@ 0
-        new_id=$(notify-send -p -u low -r "$notify_id" "Volume" "Unmuted")
+        notify -u low "Volume" "Unmuted"
     else
         pactl set-sink-mute @DEFAULT_SINK@ 1
-        new_id=$(notify-send -p -u low -r "$notify_id" "Volume" "Muted")
+        notify -u low "Volume" "Muted"
     fi
-
-    set_notify_id "$new_id"
 }
 
 case "$1" in
