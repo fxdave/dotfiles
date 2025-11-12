@@ -45,6 +45,8 @@ URxvt.perl-ext-common: default,pasta,matcher,resize-font,vtwheel,keyboard-select
 URxvt.resize-font.smaller: C-Up
 URxvt.resize-font.bigger:  C-Down
 
+URxvt.keysym.M-Left: \033[1;3D
+URxvt.keysym.M-Right: \033[1;3C
 URxvt.keysym.C-Down:  resize-font:smaller
 URxvt.keysym.C-Up:    resize-font:bigger
 
